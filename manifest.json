@@ -1,0 +1,14 @@
+{
+  "name": "아침브리핑 AI",
+  "short_name": "아침브리핑",
+  "description": "날씨, 뉴스, 일정, 음악을 한 번에 확인하는 아침 브리핑 PWA",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f7fb",
+  "theme_color": "#ffffff",
+  "lang": "ko-KR",
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

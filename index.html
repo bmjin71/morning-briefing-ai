@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <title>아침브리핑 AI</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="icons/icon-192.png">
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">GOOD MORNING</p>
+      <h1>🌅 아침브리핑 AI</h1>
+      <p id="todayText">오늘도 좋은 하루 보내세요.</p>
+    </div>
+    <button id="refreshBtn" class="icon-btn" aria-label="새로고침">↻</button>
+  </header>
+
+  <main>
+    <section class="card weather-card">
+      <div class="card-title">
+        <span>☀️</span><h2>1. 오늘의 날씨</h2>
+      </div>
+      <div id="weatherStatus" class="muted">김포 날씨를 불러오는 중입니다...</div>
+      <div id="weatherBox" class="weather-grid hidden">
+        <div><strong id="temp">--°</strong><span>현재</span></div>
+        <div><strong id="maxTemp">--°</strong><span>최고</span></div>
+        <div><strong id="minTemp">--°</strong><span>최저</span></div>
+        <div><strong id="rain">--%</strong><span>강수확률</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-title">
+        <span>📰</span><h2>2. 최근 뉴스</h2>
+      </div>
+      <div id="newsStatus" class="muted">주요 뉴스를 불러오는 중입니다...</div>
+      <ol id="newsList" class="news-list"></ol>
+      <a class="sub-button" href="https://news.google.com/home?hl=ko&gl=KR&ceid=KR:ko" target="_blank" rel="noopener">Google 뉴스에서 더 보기</a>
+    </section>
+
+    <section class="card">
+      <div class="card-title">
+        <span>📅</span><h2>3. 오늘의 일정</h2>
+      </div>
+      <p class="muted small">이 PWA 기본버전은 일정 내용을 휴대폰 안에 저장합니다. Google 캘린더는 아래 버튼으로 바로 열 수 있습니다.</p>
+
+      <form id="scheduleForm" class="schedule-form">
+        <input id="scheduleTime" type="time" required aria-label="시간">
+        <input id="scheduleTitle" type="text" maxlength="50" placeholder="예: 오전 회의" required>
+        <button type="submit">추가</button>
+      </form>
+      <ul id="scheduleList" class="schedule-list"></ul>
+      <a class="sub-button" href="https://calendar.google.com/calendar/u/0/r/day" target="_blank" rel="noopener">Google 캘린더 열기</a>
+    </section>
+
+    <section class="card">
+      <div class="card-title">
+        <span>🎵</span><h2>4. 음악 듣기</h2>
+      </div>
+      <div class="music-buttons">
+        <a class="music-button" href="https://music.youtube.com/" target="_blank" rel="noopener">▶ YouTube Music</a>
+        <a class="music-button" href="https://open.spotify.com/" target="_blank" rel="noopener">♫ Spotify</a>
+      </div>
+    </section>
+
+    <section class="card briefing-card">
+      <div class="card-title">
+        <span>🔊</span><h2>AI 아침 브리핑</h2>
+      </div>
+      <p id="briefingText">날씨, 뉴스, 오늘 일정을 모아 읽어드립니다.</p>
+      <div class="briefing-actions">
+        <button id="speakBtn" class="primary">브리핑 듣기</button>
+        <button id="stopBtn" class="secondary">정지</button>
+      </div>
+    </section>
+
+    <section class="card install-card">
+      <div class="card-title">
+        <span>📲</span><h2>홈 화면에 설치</h2>
+      </div>
+      <p class="muted small">Chrome 메뉴의 '홈 화면에 추가' 또는 아래 설치 버튼을 사용하세요.</p>
+      <button id="installBtn" class="primary hidden">앱 설치</button>
+    </section>
+  </main>
+
+  <footer>아침브리핑 AI · PWA 학습용 버전</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
