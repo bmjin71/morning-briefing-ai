@@ -184,6 +184,145 @@ if('serviceWorker' in navigator){
   window.addEventListener('load', ()=>navigator.serviceWorker.register('./sw.js'));
 }
 
+// ===============================
+// 아침브리핑 자동재생 기능
+// ===============================
+
+async function startMorningBriefing() {
+  // 날씨와 뉴스를 먼저 최신 정보로 불러옵니다.
+  await Promise.all([
+    loadWeather(),
+    loadNews()
+  ]);
+
+  // 일정도 다시 표시합니다.
+  renderSchedules();
+
+  // 브리핑 문장을 만듭니다.
+  const briefing = buildBriefing();
+  $('briefingText').textContent = briefing;
+
+  // 음성 브리핑 시작
+  speakBriefing();
+}
+
+
+// 주소에 ?autoplay=1 이 있는지 확인
+function isAutoPlayRequested() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('autoplay') === '1';
+}
+
+
+// 자동재생 시도
+async function tryAutoBriefing() {
+
+  if (!isAutoPlayRequested()) {
+    return;
+  }
+
+  // 화면에 안내 표시
+  $('briefingText').textContent =
+    '아침 브리핑을 준비하고 있습니다...';
+
+  try {
+
+    // 정보 로딩
+    await Promise.all([
+      loadWeather(),
+      loadNews()
+    ]);
+
+    renderSchedules();
+
+    // 약간 기다린 뒤 음성 실행
+    setTimeout(() => {
+
+      try {
+
+        speakBriefing();
+
+      } catch (error) {
+
+        showTouchMessage();
+
+      }
+
+    }, 1200);
+
+  } catch (error) {
+
+    showTouchMessage();
+
+  }
+
+}
+
+
+// 브라우저가 자동 음성을 막았을 때
+function showTouchMessage() {
+
+  $('briefingText').textContent =
+    '화면을 한 번 누르면 아침 브리핑이 시작됩니다.';
+
+}
+
+
+// 첫 터치 시 자동 브리핑
+function enableFirstTouchBriefing() {
+
+  if (!isAutoPlayRequested()) {
+    return;
+  }
+
+  const startOnTouch = () => {
+
+    if (!window.speechSynthesis.speaking) {
+
+      speakBriefing();
+
+    }
+
+    document.removeEventListener(
+      'click',
+      startOnTouch
+    );
+
+    document.removeEventListener(
+      'touchstart',
+      startOnTouch
+    );
+
+  };
+
+  document.addEventListener(
+    'click',
+    startOnTouch,
+    { once: true }
+  );
+
+  document.addEventListener(
+    'touchstart',
+    startOnTouch,
+    { once: true }
+  );
+
+}
+
+
+// ===============================
+// 앱 시작
+// ===============================
+
 $('todayText').textContent = formatKoreanDate();
+
 renderSchedules();
-Promise.all([loadWeather(), loadNews()]);
+
+Promise.all([
+  loadWeather(),
+  loadNews()
+]);
+
+enableFirstTouchBriefing();
+
+tryAutoBriefing();
